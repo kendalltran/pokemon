@@ -1,0 +1,29 @@
+<html>
+<head>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="banner main row">
+  <h1>Pokemon Database: Kanto Region</h1>
+  <a href="{{url_for('gdisconnect')}}">Log Out</a><br><hr>
+  {% for user in users %}
+  <img src = "{{user.picture}}", style = "height: 60px;">
+  <h3>Username: {{user.username}}
+  {% if loggedInUserId == user.userid %}
+  (*Logged In)
+  {% endif %}
+  </h3>
+  <div class="banner"><hr>
+  <p>UserID: {{user.userid}}</p>
+  <a href="{{url_for('viewPokemons', userid = user.userid)}}">View Pokemon</a><br>
+  <a href="{{url_for('viewPokemonsJSON', userid = user.userid)}}">View Pokemon as JSON</a><br>
+  <a href="{{url_for('viewUserJSON', userid = user.userid)}}">View User as JSON</a><br>
+  {% if loggedInUserId == user.userid %}
+  <a href="{{url_for('addPokemon', userid = user.userid)}}">*Add Pokemon</a><br>
+  <a href="{{url_for('editUser', userid = user.userid)}}">*Edit User</a><br>
+  <a href="{{url_for('deleteUser', userid = user.userid)}}">*Delete User</a><br>
+  {% endif %}
+  <hr>
+  {% endfor %}
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<html>
+<head>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <form action="#" method ='POST'>
+  <p>Pokemonname:</p>
+  <input type = 'text' size = '30' value="{{pokemon.pokemonname}}" name = 'name'><br>
+  <p>Picture:</p>
+  <input type = 'text' size = '30' value="{{pokemon.picture}}" name = 'picture'>
+  <select name = 'gender'>
+    <option value = "Male">Male</option>
+    <option value = "Female">Female</option>
+  </select>
+  <input type = 'submit' value = 'Edit'>
+  </form>
+  <form action="{{url_for('viewPokemons', userid = pokemon.user_id, pokemonid = pokemon.pokemonid)}}" method = 'GET'>
+  <input type="submit" value="Cancel">
+  </form>
+</body>
+</html>

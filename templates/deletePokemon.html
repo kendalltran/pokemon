@@ -1,0 +1,13 @@
+<html>
+<head>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <form action="#" method ='POST'>
+  <p>Are you sure you want to delete {{pokemon.pokemonname}}? <input type="submit" value="Delete"></p>
+  </form>
+  <form action="{{url_for('viewPokemons', userid = pokemon.user_id, pokemonid = pokemon.pokemonid)}}" method = 'GET'>
+  <input type="submit" value="Cancel">
+  </form>
+</body>
+</html>

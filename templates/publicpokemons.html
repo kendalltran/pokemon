@@ -1,0 +1,19 @@
+<html>
+<head>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <h1>{{user.username}}'s Pokemon Database</h1>
+  <!-- <a href="{{url_for('addPokemon', userid = user.userid)}}">Add Pokemon</a><hr> -->
+  {% for pokemon in pokemons %}
+  <img src = "{{pokemon.picture}}", style = "height: 60px;">
+  <h3>Pokemonname: {{pokemon.pokemonname}} </h3>
+  <p>Pokemonid: {{pokemon.pokemonid}}</p>
+  <p>Gender: {{pokemon.gender}}</p>
+  <!-- <a href="{{url_for('editPokemon', userid = user.userid, pokemonid = pokemon.pokemonid)}}">Edit Pokemon</a><br>
+  <a href="{{url_for('deletePokemon', userid = user.userid, pokemonid = pokemon.pokemonid)}}">Delete Pokemon</a> -->
+  <hr>
+  {% endfor %}
+  <a href="{{url_for('viewKanto')}}">Return to Kanto Database</a>
+  </body>
+</html>
