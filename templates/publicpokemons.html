@@ -10,6 +10,7 @@
   <h3>Pokemonname: {{pokemon.pokemonname}} </h3>
   <p>Pokemonid: {{pokemon.pokemonid}}</p>
   <p>Gender: {{pokemon.gender}}</p>
+  <a href="{{url_for('viewPokemonJSON', userid = user.userid, pokemonid = pokemon.pokemonid)}}">View Pokemon as JSON</a><br>
   <!-- <a href="{{url_for('editPokemon', userid = user.userid, pokemonid = pokemon.pokemonid)}}">Edit Pokemon</a><br>
   <a href="{{url_for('deletePokemon', userid = user.userid, pokemonid = pokemon.pokemonid)}}">Delete Pokemon</a> -->
   <hr>

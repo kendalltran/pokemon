@@ -12,8 +12,8 @@
   <img src = "{{user.picture}}", style = "height: 60px;">
   <h3>Username: {{user.username}} </h3>
   <p>UserID: {{user.userid}}</p>
-  <a href="{{url_for('viewPokemons', userid = user.userid)}}">View Pokemon</a><br>
-  <a href="{{url_for('viewPokemonsJSON', userid = user.userid)}}">View Pokemon as JSON</a><br>
+  <a href="{{url_for('viewPokemons', userid = user.userid)}}">View Pokemons</a><br>
+  <a href="{{url_for('viewPokemonsJSON', userid = user.userid)}}">View Pokemons as JSON</a><br>
   <!-- <a href="{{url_for('editUser', userid = user.userid)}}">Edit User</a><br>
   <a href="{{url_for('deleteUser', userid = user.userid)}}">Delete User</a> -->
   <a href="{{url_for('viewUserJSON', userid = user.userid)}}">View User as JSON</a>

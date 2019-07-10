@@ -1,4 +1,4 @@
-from sqlalchemy import Column,Integer,String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
@@ -20,6 +20,7 @@ class User(Base):
             'username': self.username
             }
 
+
 class Pokemon(Base):
     __tablename__ = 'pokemon'
     pokemonid = Column(Integer, primary_key=True)
@@ -28,7 +29,6 @@ class Pokemon(Base):
     user = relationship(User)
     picture = Column(String(250))
     gender = Column(String(20))
-
 
     @property
     def serialize(self):
