@@ -36,13 +36,13 @@ N/A
 (9) Enjoy!
 
 ## API Reference
-N/A
+There are API endpoints in JSON provided (1) for a specific user (2) for all pokemon of a specific user and (3) for a specific pokemon of a specific user.
 
 ## Tests
 N/A
 
 ## How to use?
-N/A
+Register as google accounts and create Pokemons for your unique account.
 
 ## Contribute
 N/A

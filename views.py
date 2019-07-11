@@ -38,6 +38,7 @@ session = DBSession()
 
 @app.route("/login")
 def showLogin():
+    '''this method shows Google sign-in screen'''
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in range(32))
     login_session['state'] = state
@@ -48,7 +49,7 @@ def showLogin():
 
 @app.route("/gconnect", methods=['POST'])
 def gconnect():
-    # Validate state token
+    '''this method validates state token'''
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid State Parameter.'), 401)
         response.headers['Content-Type'] = 'application/json'
@@ -111,6 +112,7 @@ def gconnect():
     login_session['email'] = data['email']
 
     def createUser(login_session):
+        '''this method create's user for login session object'''
         newUser = User(username=login_session['username'],
                        useremail=login_session['email'],
                        picture=login_session['picture'])
@@ -121,10 +123,12 @@ def gconnect():
         return user.userid
 
     def getUserInfo(user_id):
+        '''this method queries for a specific User'''
         user = session.query(User).filter_by(userid=user_id).one()
         return user
 
     def getUserID(email):
+        '''this method gets a User ID by email query'''
         try:
             user = session.query(User).filter_by(useremail=email).one()
             return user.userid
@@ -151,6 +155,7 @@ def gconnect():
 
 @app.route('/gdisconnect')
 def gdisconnect():
+    '''this method disconnects logged-in user'''
     access_token = login_session.get('access_token')
     if access_token is None:
         print('Access Token is None')
@@ -187,6 +192,7 @@ def gdisconnect():
 
 @app.route("/kanto/<int:userid>/JSON/")
 def viewUserJSON(userid):
+    '''this method provides User information in JSON'''
     user = session.query(User).filter_by(userid=userid).one()
     return jsonify(user=user.serialize)
     # (C1) ^returns serialized date in JSON format (useful for other
@@ -195,6 +201,7 @@ def viewUserJSON(userid):
 
 @app.route("/kanto/<int:userid>/pokemons/JSON/")
 def viewPokemonsJSON(userid):
+    '''this method provides User's Pokemoninformation in JSON'''
     user = session.query(User).filter_by(userid=userid).one()
     pokemons = session.query(Pokemon).filter_by(user_id=userid).all()
     return jsonify(pokemons=[pokemon.serialize for pokemon in pokemons])
@@ -203,6 +210,7 @@ def viewPokemonsJSON(userid):
 @app.route("/")
 @app.route("/kanto/")
 def viewKanto():
+    '''this method is the generic home page, and provides view of users'''
     users = session.query(User).all()
     if 'username' not in login_session:
         return render_template('publicusers.html', users=users)
@@ -214,6 +222,7 @@ def viewKanto():
 
 @app.route("/kanto/add", methods=['GET', 'POST'])
 def addUser():
+    '''this method adds a new User'''
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
@@ -229,6 +238,7 @@ def addUser():
 
 @app.route("/kanto/<int:userid>/edit", methods=['GET', 'POST'])
 def editUser(userid):
+    '''this method edits an existing User'''
     if 'username' not in login_session:
         return redirect('/login')
     if userid != login_session['user_id']:
@@ -246,6 +256,7 @@ def editUser(userid):
 
 @app.route("/kanto/<int:userid>/delete", methods=['GET', 'POST'])
 def deleteUser(userid):
+    '''this method deletes specific User'''
     if 'username' not in login_session:
         return redirect('/login')
     user = session.query(User).filter_by(userid=userid).one()
@@ -260,9 +271,10 @@ def deleteUser(userid):
 @app.route("/kanto/<int:userid>/")
 @app.route("/kanto/<int:userid>/pokemons/")
 def viewPokemons(userid):
+    '''this method allows view of a User's Pokemons'''
     user = session.query(User).filter_by(userid=userid).one()
     pokemons = session.query(Pokemon).filter_by(user_id=userid).all()
-    if login_session['user_id'] != user.userid:
+    if 'username' not in login_session:
         return render_template('publicpokemons.html', user=user,
                                pokemons=pokemons)
     else:
@@ -272,6 +284,7 @@ def viewPokemons(userid):
 
 @app.route("/kanto/<int:userid>/pokemons/add", methods=['GET', 'POST'])
 def addPokemon(userid):
+    '''this method allows for addition of Pokemon for a specific user'''
     if 'username' not in login_session:
         return redirect('/login')
     if userid != login_session['user_id']:
@@ -293,6 +306,7 @@ def addPokemon(userid):
 
 @app.route("/kanto/<int:userid>/pokemons/<int:pokemonid>/JSON/")
 def viewPokemonJSON(userid, pokemonid):
+    '''this method allows to view one pokemon in JSON'''
     # (F1) ^ userid parameter not actually needed in logic.  only necessary
     #   to keep the URI valid
     pokemon = session.query(Pokemon).filter_by(pokemonid=pokemonid).one()
@@ -302,6 +316,7 @@ def viewPokemonJSON(userid, pokemonid):
 @app.route("/kanto/<int:userid>/pokemons/<int:pokemonid>/edit",
            methods=['GET', 'POST'])
 def editPokemon(userid, pokemonid):
+    '''this method allows to edit one pokemon'''
     # user = session.query(User).filter_by(userid = userid).one()
     if 'username' not in login_session:
         return redirect('/login')
@@ -323,6 +338,7 @@ def editPokemon(userid, pokemonid):
 @app.route("/kanto/<int:userid>/pokemons/<int:pokemonid>/delete",
            methods=['GET', 'POST'])
 def deletePokemon(userid, pokemonid):
+    '''this method allows to delete one Pokemon'''
     if 'username' not in login_session:
         return redirect('/login')
     if userid != login_session['user_id']:
